@@ -10,8 +10,7 @@ Every diagnosis is grounded in real agricultural research with cited sources.
 
 - [Features](#-features)
 - [Setup](#-setup)
-  - [Option A: Docker (recommended)](#option-a-docker-recommended)
-  - [Option B: Local development](#option-b-local-development)
+  - [Local development](#option-a-local-development)
 - [Usage](#-usage)
 - [Architecture](#-architecture)
 - [Logical Flow](#-logical-flow)
@@ -32,7 +31,6 @@ Every diagnosis is grounded in real agricultural research with cited sources.
 | 📚 **Cited sources** | Recommendations link directly to UC IPM research pages |
 | 💬 **Multi-turn ReAct loop** | Asks clarifying questions, doesn't guess from one photo |
 | 🔒 **Fully local** | No API keys, no cloud calls, your data never leaves your machine |
-| 🐳 **One-command deploy** | `docker compose up -d` and you're live |
 
 ---
 
@@ -67,7 +65,7 @@ ollama list
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements-docker.txt
+pip install -r requirements.txt
 ```
 
 #### 3. (Optional) Rebuild the vector database
@@ -296,10 +294,7 @@ Groot/
 │   ├── diseases.json           # Raw scraped data
 │   └── diseases_og2.json       # Enriched structured data
 ├── database/                   # ChromaDB persistent store
-├── requirements-docker.txt     # Runtime dependencies
-├── Dockerfile                  # App container build
-├── docker-compose.yml          # Multi-container orchestration
-├── .dockerignore
+├── requirements.txt     # Runtime dependencies
 └── README.md
 ```
 
@@ -347,7 +342,6 @@ Serves the chat UI.
 | Embeddings | `intfloat/e5-base-v2` (768-dim) |
 | Speech-to-text | Whisper-small (OpenAI, via HuggingFace) |
 | Data enrichment (one-time) | Gemini 2.0 Flash |
-| Containerization | Docker + Docker Compose |
 
 ---
 
@@ -355,7 +349,6 @@ Serves the chat UI.
 
 **Ollama can't be reached:**
 - Make sure Ollama is running: `ollama list`
-- If using Docker, check the `OLLAMA_HOST` env var points to the right place
 - Default port is 11434
 
 **Microphone doesn't work:**

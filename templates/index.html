@@ -520,6 +520,7 @@
     <script>
         let selectedImage = null;
         let selectedLanguage = 'English';
+        let isSending = false;
 
         marked.setOptions({
             gfm: true,
@@ -597,6 +598,7 @@
         function handleKey(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
+                if (isSending) return;
                 sendMessage();
             }
         }
@@ -673,12 +675,17 @@
         }
 
         async function sendMessage() {
+            if (isSending) return;
             const input = document.getElementById('message-input');
             const text = input.value.trim();
             if (!text && !selectedImage) return;
 
+            isSending = true;
             const sendBtn = document.getElementById('send-btn');
+            const micBtn = document.getElementById('mic-btn');
             sendBtn.disabled = true;
+            micBtn.disabled = true;
+            input.disabled = true;
 
             let imageUrl = null;
             if (selectedImage) {
@@ -702,14 +709,20 @@
                 const res = await fetch('/chat', { method: 'POST', body: formData });
                 const data = await res.json();
                 hideTyping();
-                addMessage('assistant', data.response);
+                const reply = (data && typeof data.response === 'string' && data.response.trim())
+                    ? data.response
+                    : '_(no response)_';
+                addMessage('assistant', reply);
             } catch (err) {
                 hideTyping();
                 addMessage('assistant', 'Error: ' + err.message);
+            } finally {
+                isSending = false;
+                sendBtn.disabled = false;
+                micBtn.disabled = false;
+                input.disabled = false;
+                input.focus();
             }
-
-            sendBtn.disabled = false;
-            input.focus();
         }
 
         async function resetChat() {
