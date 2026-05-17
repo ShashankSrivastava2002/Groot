@@ -76,8 +76,7 @@ The `database/` folder ships with a pre-built ChromaDB collection. To rebuild it
 # Step 1: Scrape disease records (one-time, ~5 min)
 python3 scrap.py
 
-# Step 2: Enrich with structured fields (uses Gemini API, set GOOGLE_API_KEY first)
-export GOOGLE_API_KEY="your-key-here"
+# Step 2: Enrich with structured fields (uses Gemma 4 : e2b )
 python3 enrichment_data.py
 
 # Step 3: Build vector embeddings into ChromaDB
@@ -150,7 +149,7 @@ This section explains how a single user query travels through the system end-to-
 Before users ever touch the app, we build the dataset:
 
 1. **Scrape** disease records from [UC IPM](https://ipm.ucanr.edu/) using BeautifulSoup. Each entry has a host plant, symptom description, scientific name, and disease type.
-2. **Enrich** raw HTML into structured JSON using the Gemini API. We extract: `symptoms[]`, `hosts[]`, `pathogens[]`, `precautions[]`, `recommendations[]`, and `citation[]` (URLs).
+2. **Enrich** raw HTML into structured JSON using the Gemma4 e2b. We extract: `symptoms[]`, `hosts[]`, `pathogens[]`, `precautions[]`, `recommendations[]`, and `citation[]` (URLs).
 3. **Embed** each disease's symptom list using `intfloat/e5-base-v2` (768-dim).
 4. **Index** into ChromaDB with disease name, hosts, and pathogens as metadata.
 
@@ -287,7 +286,7 @@ Groot/
 ├── embedding_search.py         # ChromaDB + E5 embeddings
 ├── transcription.py            # Whisper-small voice transcription
 ├── scrap.py                    # One-time UC IPM scraper
-├── enrichment_data.py          # Gemini-based field extraction
+├── enrichment_data.py          # Gemma4 :e2b -based field extraction
 ├── templates/
 │   └── index.html              # Single-page chat UI
 ├── dataset/
@@ -341,7 +340,7 @@ Serves the chat UI.
 | Vector DB | ChromaDB (HNSW, cosine similarity) |
 | Embeddings | `intfloat/e5-base-v2` (768-dim) |
 | Speech-to-text | Whisper-small (OpenAI, via HuggingFace) |
-| Data enrichment (one-time) | Gemini 2.0 Flash |
+| Data enrichment (one-time) | Gemma 4 :e2b
 
 ---
 
