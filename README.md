@@ -4,6 +4,10 @@ A multilingual, multimodal plant disease diagnosis assistant powered by **Gemma 
 Runs entirely on local hardware. Accepts text, voice, or image queries in **7 languages**.
 Every diagnosis is grounded in real agricultural research with cited sources.
 
+### NOTE : 
+- The following project is an official submission for the 🏆 Kaggle Gemma 4 Good Hackathon (Track: Digital Equity & Inclusivity / Global Resilience). 
+- https://www.kaggle.com/competitions/gemma-4-good-hackathon/overview
+
 ---
 
 ## Table of Contents
