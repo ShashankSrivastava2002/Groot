@@ -8,6 +8,9 @@ Every diagnosis is grounded in real agricultural research with cited sources.
 - The following project is an official submission for the 🏆 Kaggle Gemma 4 Good Hackathon (Track: Digital Equity & Inclusivity / Global Resilience). 
 - https://www.kaggle.com/competitions/gemma-4-good-hackathon/overview
 
+
+- TEST CASES : ./dataset/images ( named as : plant_name-disease_name.jpg)
+
 ---
 
 ## Table of Contents
